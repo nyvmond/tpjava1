@@ -84,7 +84,16 @@ public class Tienda {
                     System.out.println("Saldo en caja restante para futuras operaciones: "+getSaldoEnCaja()+"\n");
                 }else{
                     //Contemplo que el storage no este vacio pero entro otro id de producto
-
+                    System.out.println("El producto que esta ingresando no existia en el Store");
+                    this.productosEnStock.add(producto);
+                    System.out.println("Se agrego el siguiente producto al store: \n");
+                    System.out.println("ID: "+p.getId()+"\n");
+                    System.out.println("Descripcion: "+p.getDescription() + "\n");
+                    System.out.println("Cantidad en Stock: "+p.getCantidadEnStock() + "\n");
+                    //Manejo saldo en caja
+                    saldoGastado = saldoAGastar(cant, p.getCostoPorUnidad());
+                    setSaldoEnCaja(getSaldoEnCaja()-saldoGastado);
+                    System.out.println("Saldo en caja restante: "+getSaldoEnCaja()+"\n");
                 }
             }
 
