@@ -14,6 +14,11 @@ public class App {
         boolean fincompra = false;
         Scanner sc = new Scanner(System.in);
 
+        //Hardcodeo el nombre de la tienda
+        //Lo correcto seria pedir el nombre y el saldo en caja y lo voy manejando
+        Tienda productoTienda = new Tienda("Tinita", 100000);
+
+
         do{
             //Codigo
             System.out.println("Bienvenido");
@@ -56,54 +61,24 @@ public class App {
                     }
                     System.out.println("Se encuentra disponible para la venta? SI");
                     boolean disponibleParaLaVenta = true;
-
                     //Hasta aca hago una nueva bebida y le pase por params lo que el usuario ingreso
                     Bebidas bebida = new Bebidas(id, descripcion, precioPorUnidad,costoPorUnidad,
                             esAlcoholica,graduacionAlcoholica,esImportada, disponibleParaLaVenta, cantidadDeProducto);
 
-                    ///////////////////////CAJA//////////////////////////////////
-                    //Consulto por el nombre de la Tienda y saldo en caja
-                    System.out.println("Ingrese nombre de la tienda: ");
-                    String nombreTienda = sc.next();
-                    System.out.println("Ingrese monto en caja: ");
-                    float saldoEnCaja = sc.nextFloat();
-
-                    //Instancio Tienda para utilizar los metodos
-                    Tienda productoTienda = new Tienda(nombreTienda, saldoEnCaja);
                     //Valido si saldo en caja es suficiente para abastecerme
                     boolean puedoAbastecerme = productoTienda.saldoEnCajaParacomprar(cantidadDeProducto,
-                            costoPorUnidad,saldoEnCaja);
-                    //puedoAbastecerme resulta en true
-                    //boolean productoExiste = false;
-
+                            costoPorUnidad);
+                    //Si tengo mas saldo en caja que lo que estoy queriendo gastar puedo comprar el producto para
+                    //abastecimiento de mi tienda
                     if(puedoAbastecerme){
+                        //Le paso el producto, el id y la cantidad para manejo de stock
                         productoTienda.compraDeProducto(bebida, cantidadDeProducto, id);
-//                        productoExiste = productoTienda.productoExiste(id);
-                        //System.out.println("Producto Existe??? "+productoExiste);
-                        //No existe
-//                        if(productoExiste){
-//                            System.out.println("Existo");
-//                            //Siempre me da false
-//                            //El flujo es que si existe hay que agregar en el stock
-//                            //Quizas es porque tengo que acceder mediante el setter?
-//                            productoTienda.agregarStock(cantidadDeProducto, id);
-//                        }else{
-//                            System.out.println("No existo");
-//                            //Si no existe hago la compra de producto
-//                            productoTienda.compraDeProducto(bebida, cantidadDeProducto, id);
-//                        }
-
-
                     }else{
+                        //Caso de no tener saldo disponible
                         System.out.println("No dispone de saldo suficiente para abastecerse.");
                     }
-
                 } //Termina flujo compra de BEBIDA para abastecimiento
-
-
-
-
-
+                ///////////////////////////////////////////////////////
                 /////////////////ENVASADOS/////////////////////////////
                 if(eleccionTipoProducto == 2){
                     System.out.println("Ingrese codigo de producto");
@@ -127,35 +102,22 @@ public class App {
 
                     Envasados envasado = new Envasados(id, descripcion, cantidadDeProducto, precioPorUnidad,
                             costoPorUnidad, tipoEnvase, esImportado,disponibleParaLaVenta);
-                    ///////////////////////CAJA//////////////////////////////////
-                    //Consulto por el nombre de la Tienda y saldo en caja
-                    System.out.println("Ingrese nombre de la tienda: ");
-                    String nombreTienda = sc.next();
-                    System.out.println("Ingrese monto en caja: ");
-                    float saldoEnCaja = sc.nextFloat();
 
-                    //Instancio Tienda para utilizar los metodos
-                    Tienda productoTienda = new Tienda(nombreTienda, saldoEnCaja);
+
+                    //Valido si saldo en caja es suficiente para abastecerme
                     boolean puedoAbastecerme = productoTienda.saldoEnCajaParacomprar(cantidadDeProducto,
-                            costoPorUnidad,saldoEnCaja);
-                    //System.out.println(puedoAbastecerme + "Puedo Abastecerme? Da Vinky?");
+                            costoPorUnidad);
+                    //Si tengo mas saldo en caja que lo que estoy queriendo gastar puedo comprar el producto para
+                    //abastecimiento de mi tienda
                     if(puedoAbastecerme){
-                        boolean productoExiste = productoTienda.productoExiste(id);
-                        //Nunca entra aca...
-                        if(productoExiste){
-                            System.out.println("Existo");
-                        }else{
-                            System.out.println("No existo");
-                        }
-                        productoTienda.agregarStock(cantidadDeProducto, id);
+                        //Le paso el producto, el id y la cantidad para manejo de stock
                         productoTienda.compraDeProducto(envasado, cantidadDeProducto, id);
-                    }
-                    else{
+                    }else{
+                        //Caso de no tener saldo disponible
                         System.out.println("No dispone de saldo suficiente para abastecerse.");
                     }
-
                 }
-                /////LIMPIEZA////
+                /////LIMPIEZA////TODO
 
 
             } //Termina el flujo de compra para abstecimiento
