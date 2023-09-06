@@ -16,8 +16,8 @@ public class App {
 
         //Hardcodeo el nombre de la tienda
         //Lo correcto seria pedir el nombre y el saldo en caja y lo voy manejando
-        Tienda productoTienda = new Tienda("Tinita", 100000);
-
+        //Instanciando Tienda le estoy mandando el saldo en caja
+        Tienda productoTienda = new Tienda("Tinita-Store", 100000);
 
         do{
             //Codigo
@@ -29,8 +29,8 @@ public class App {
                 System.out.println("Que desea comprar?");
                 System.out.println("1- Bebidas \n 2- Envasados \n 3. Limpieza");
                 eleccionTipoProducto = sc.nextInt();
-                //////////////////////////////////////////////////////////////////////////
-                //BEBIDAS
+                //////////////////////////////////////////////////////////////////////////////
+                ///////////////////////BEBIDAS///////////////////////////////////////////////
                 if(eleccionTipoProducto == 1){
                     System.out.println("Ingrese codigo de producto");
                     String id = sc.next();
@@ -44,22 +44,12 @@ public class App {
                     System.out.println("Ingrese Costo por Unidad");
                     //A que precio lo compro como comerciante
                     float costoPorUnidad = sc.nextFloat();
-                    System.out.println("Ingrese 1 si es alcoholica");
-                    eleccion = sc.nextInt();
+                    System.out.println("Actualmente no vendemos bebidas alcoholicas");
                     boolean esAlcoholica = false;
                     float graduacionAlcoholica = 0;
-                    if(eleccion == 1){
-                        esAlcoholica = true;
-                        System.out.println("Ingrese Graduacion Alcoholica: ");
-                        graduacionAlcoholica = sc.nextFloat();
-                    }
-                    System.out.println("Ingrese 1 si es importada");
-                    eleccion = sc.nextInt();
+                    System.out.println("Actualmente no tenemos bebidas importadas");
                     boolean esImportada = false;
-                    if(eleccion == 1){
-                        esImportada = true;
-                    }
-                    System.out.println("Se encuentra disponible para la venta? SI");
+                    System.out.println("Se encuentra disponible para la venta");
                     boolean disponibleParaLaVenta = true;
                     //Hasta aca hago una nueva bebida y le pase por params lo que el usuario ingreso
                     Bebidas bebida = new Bebidas(id, descripcion, precioPorUnidad,costoPorUnidad,
@@ -68,8 +58,6 @@ public class App {
                     //Valido si saldo en caja es suficiente para abastecerme
                     boolean puedoAbastecerme = productoTienda.saldoEnCajaParacomprar(cantidadDeProducto,
                             costoPorUnidad);
-                    //Si tengo mas saldo en caja que lo que estoy queriendo gastar puedo comprar el producto para
-                    //abastecimiento de mi tienda
                     if(puedoAbastecerme){
                         //Le paso el producto, el id y la cantidad para manejo de stock
                         productoTienda.compraDeProducto(bebida, cantidadDeProducto, id);
@@ -123,10 +111,11 @@ public class App {
             } //Termina el flujo de compra para abstecimiento
             //<----FIN
 
-            System.out.println("Desea realizar otra compra? 1- FIN COMPRA 2- SEGUIR COMPRANDO");
+            System.out.println("Desea realizar otra compra? 1- VOLVER AL MENU 2- FIN COMPRA");
             int finCompraNum = sc.nextInt();
-            if(finCompraNum == 1){
+            if(finCompraNum == 2){
                 fincompra = true;
+                System.out.println("Saldo en caja restante: "+ productoTienda.getSaldoEnCaja());
             }
         }while(!fincompra);
 

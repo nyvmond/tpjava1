@@ -41,44 +41,52 @@ public class Tienda {
         this.productosEnStock = productosEnStock;
     }
     Scanner sc = new Scanner(System.in);
+    float saldoGastado = 0;
 
     //La cantidad que entra por param viene en el producto tmb asi como el id, habria que sacar ese param
     public void compraDeProducto(Producto producto, int cant, String id){
 
         //Si no hay nada en la primer posicion de la lista agrego el producto
         if(this.productosEnStock.size()==0){
-            System.out.println("Size de Lista igual a Cero");
+            System.out.println("El store se encontraba vacio.");
             this.productosEnStock.add(producto);
             //Luego recorro lo que hay y lo imprimo en pantalla
+            //Tambien actualizo saldo en caja
             for (Producto p : this.productosEnStock) {
-                System.out.println("DATOS: \n");
+                System.out.println("Se agrego el siguiente producto al store: \n");
                 System.out.println("ID: "+p.getId()+"\n");
                 System.out.println("Descripcion: "+p.getDescription() + "\n");
                 System.out.println("Cantidad en Stock: "+p.getCantidadEnStock() + "\n");
+                //Manejo saldo en caja
+                saldoGastado = saldoAGastar(cant, p.getCostoPorUnidad());
+                setSaldoEnCaja(getSaldoEnCaja()-saldoGastado);
+                System.out.println("Saldo en caja restante: "+getSaldoEnCaja()+"\n");
             }
 
-//
-//      System.out.println("Se ha comprado el producto con exito");
         //Comparo si ya existe el id que entro por paramcontra algun obj en la lista:
         }else if(this.productosEnStock.size()>=1){
-            //Hago una busqueda y si existe el id manejo el stock
-            //Tendria que manejar saldo en caja tmb TODO
-            //boolean busqueda = false;
+            //Hago una busqueda y si existe el id
+            //1. Manejo el stock
+            //2. Manejo saldo en caja
+            //3. Imprimo datos del producto
             for (Producto p : this.productosEnStock) {
                 if(p.getId().equals(id)){
                     p.setCantidadEnStock(p.getCantidadEnStock()+cant);
+                    System.out.println("Este producto ya existia, se agrega nuevo stock al mismo: \n");
+                    System.out.println("Id: "+p.getId()+"\n");
+                    System.out.println("Descripcion: "+p.getDescription() + "\n");
                     //Imprimo la cantidad en stock
-                    System.out.println("Cantidad en stock actual de prod existente: "+p.getCantidadEnStock());
-                    //setSaldoEnCaja();
-                    System.out.println("Saldo en caja: "+getSaldoEnCaja());
+                    System.out.println("Cantidad en stock actual: "+p.getCantidadEnStock());
+                    //Saldo en Caja
+                    saldoGastado = saldoAGastar(cant, p.getCostoPorUnidad());
+                    System.out.println("saldo Gastado: "+saldoGastado);
+                    setSaldoEnCaja(getSaldoEnCaja()-saldoGastado);
+                    System.out.println("Saldo en caja restante para futuras operaciones: "+getSaldoEnCaja()+"\n");
+                }else{
+                    //Contemplo que el storage no este vacio pero entro otro id de producto
+
                 }
             }
-//            if(this.productosEnStock.get(0).getId().equals(id)){
-//                System.out.println("Entro un codigo igual");
-//                //Si tengo el mismo codigo agrego el stock
-//            }else{
-//                System.out.println("Entro codigo distinto");
-//            }
 
         }else{
             System.out.println("Validacion de que size no es mayor o igual a 1");
@@ -87,19 +95,17 @@ public class Tienda {
     }//TERMINA COMPRA DE PRODUCTO
 
 
-//    public void recorrerLista(){
-//        for(Producto valor:productosEnStock){
-//            System.out.println("En La Lista Tenemos el siguiente id: " +valor.getId());
-//        }
-//    }
-
-
     //Validacion saldo en caja suficiente para abastecerme de productos
     public boolean saldoEnCajaParacomprar(int cant, float costoPorUnidad){
         if(cant*costoPorUnidad <= this.saldoEnCaja){
             return true;
         }
         return false;
+    }
+
+    //Cuanto gaste para abastecimiento de compra
+    public float saldoAGastar(int cant, float costoPorUnidad){
+        return cant * costoPorUnidad;
     }
 
 
