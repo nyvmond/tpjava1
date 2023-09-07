@@ -20,7 +20,6 @@ public class App {
         Tienda productoTienda = new Tienda("Tinita-Store", 100000);
 
         do{
-            //Codigo
             System.out.println("Bienvenido");
             System.out.println("1 para compra - 2 para venta");
             eleccionPrincipal = sc.nextInt();

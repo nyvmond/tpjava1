@@ -46,6 +46,7 @@ public class Tienda {
     //La cantidad que entra por param viene en el producto tmb asi como el id, habria que sacar ese param
     public void compraDeProducto(Producto producto, int cant, String id){
 
+        boolean nuevoProducto = false;
         //Si no hay nada en la primer posicion de la lista agrego el producto
         if(this.productosEnStock.size()==0){
             System.out.println("El store se encontraba vacio.");
@@ -62,49 +63,49 @@ public class Tienda {
                 setSaldoEnCaja(getSaldoEnCaja()-saldoGastado);
                 System.out.println("Saldo en caja restante: "+getSaldoEnCaja()+"\n");
             }
-
-        //Comparo si ya existe el id que entro por paramcontra algun obj en la lista:
-        }else if(this.productosEnStock.size()>=1){
-            //Hago una busqueda y si existe el id
+        //Caso en el cual ya existe algo en el Store:
+        }//FIN SIZE LISTA = 0
+        else if(this.productosEnStock.size()>=1) {
+            //Hago una busqueda y utilizo una bandera para saber si ya existe ese producto.
             //1. Manejo el stock
             //2. Manejo saldo en caja
             //3. Imprimo datos del producto
-            for (Producto p : this.productosEnStock) {
-                if(p.getId().equals(id)){
-                    p.setCantidadEnStock(p.getCantidadEnStock()+cant);
-                    System.out.println("Este producto ya existia, se agrega nuevo stock al mismo: \n");
-                    System.out.println("Id: "+p.getId()+"\n");
-                    System.out.println("Descripcion: "+p.getDescription() + "\n");
-                    //Imprimo la cantidad en stock
-                    System.out.println("Cantidad en stock actual: "+p.getCantidadEnStock());
-                    //Saldo en Caja
-                    saldoGastado = saldoAGastar(cant, p.getCostoPorUnidad());
-                    System.out.println("saldo Gastado: "+saldoGastado);
-                    setSaldoEnCaja(getSaldoEnCaja()-saldoGastado);
-                    System.out.println("Saldo en caja restante para futuras operaciones: "+getSaldoEnCaja()+"\n");
+            for(Producto p: this.productosEnStock){
+                if (p.getId().equals(id)) {
+                    nuevoProducto = false;
                 }else{
-                    //Contemplo que el storage no este vacio pero entro otro id de producto
-                    System.out.println("El producto que esta ingresando no existia en el Store");
-                    this.productosEnStock.add(producto);
-                    System.out.println("Se agrego el siguiente producto al store: \n");
-                    System.out.println("ID: "+p.getId()+"\n");
-                    System.out.println("Descripcion: "+p.getDescription() + "\n");
-                    System.out.println("Cantidad en Stock: "+p.getCantidadEnStock() + "\n");
-                    //Manejo saldo en caja
-                    saldoGastado = saldoAGastar(cant, p.getCostoPorUnidad());
-                    setSaldoEnCaja(getSaldoEnCaja()-saldoGastado);
-                    System.out.println("Saldo en caja restante: "+getSaldoEnCaja()+"\n");
+                    nuevoProducto = true;
                 }
             }
-
-        }else{
-            System.out.println("Validacion de que size no es mayor o igual a 1");
+                if (!nuevoProducto) {
+                    producto.setCantidadEnStock(producto.getCantidadEnStock() + cant);
+                    System.out.println("Este producto ya existe, se agrega nuevo stock al mismo: \n");
+                    System.out.println("Id: " + producto.getId() + "\n");
+                    System.out.println("Descripcion: " + producto.getDescription() + "\n");
+                    //Imprimo la cantidad en stock
+                    System.out.println("Cantidad en stock actual: " + producto.getCantidadEnStock());
+                    //Saldo en Caja
+                    saldoGastado = saldoAGastar(cant, producto.getCostoPorUnidad());
+                    System.out.println("saldo Gastado: " + saldoGastado);
+                    setSaldoEnCaja(getSaldoEnCaja() - saldoGastado);
+                    System.out.println("Saldo en caja restante para futuras operaciones: " + getSaldoEnCaja() + "\n");
+                }
+               if(nuevoProducto){
+                   System.out.println("El producto que esta ingresando no existia en el Store");
+                   this.productosEnStock.add(producto);
+                   System.out.println("Se agrego el siguiente producto al store: \n");
+                   System.out.println("ID: "+producto.getId()+"\n");
+                   System.out.println("Descripcion: "+producto.getDescription() + "\n");
+                   System.out.println("Cantidad en Stock: "+producto.getCantidadEnStock() + "\n");
+                   //Manejo saldo en caja
+                   saldoGastado = saldoAGastar(cant, producto.getCostoPorUnidad());
+                   setSaldoEnCaja(getSaldoEnCaja()-saldoGastado);
+                   System.out.println("Saldo en caja restante: "+getSaldoEnCaja()+"\n");
+               }
         }
+    }////TERMINA COMPRA DE PRODUCTO
 
-    }//TERMINA COMPRA DE PRODUCTO
-
-
-    //Validacion saldo en caja suficiente para abastecerme de productos
+    //Validacion saldo en caja suficiente para abastecimiento del Store
     public boolean saldoEnCajaParacomprar(int cant, float costoPorUnidad){
         if(cant*costoPorUnidad <= this.saldoEnCaja){
             return true;
@@ -112,11 +113,10 @@ public class Tienda {
         return false;
     }
 
-    //Cuanto gaste para abastecimiento de compra
+    //Cuanto gaste en abastecer mi store
     public float saldoAGastar(int cant, float costoPorUnidad){
         return cant * costoPorUnidad;
     }
-
 
     public void ventaDeProducto(){
         //eliminar de stock de producto en el array el producto vendido
@@ -130,14 +130,5 @@ public class Tienda {
     VALIDACION ID: BEBIBLES / ENVASADOS / LIMPIEZA
     */
 
-    /*
-    TODO
-    VALIDACION SALDO EN CAJA MENOR QUE LO QUE QUIERO ABASTECER
-     */
 
-    /*
-    TODO
-    VALIDACION SI EL ITEM EXISTE TENGO QUE AGREGAR AL ATRIBUTO STOCK
-    PARA ESTO DEBO REALIZAR UNA BUSQUEDA EN MI ARRAY
-     */
 }
