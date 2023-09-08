@@ -10,17 +10,20 @@ public class App {
 
         int eleccionPrincipal;
         int eleccionTipoProducto;
-        int eleccion;
         boolean fincompra = false;
+        String nombreTienda;
+        float saldoEnCaja;
         Scanner sc = new Scanner(System.in);
 
-        //Hardcodeo el nombre de la tienda
-        //Lo correcto seria pedir el nombre y el saldo en caja y lo voy manejando
+        //Pido Nombre de la tienda y saldo en caja para operar
+        System.out.println("Bienvenido, ingrese nombre de la Tienda");
+        nombreTienda = sc.next();
+        System.out.println("Ingrese saldo en caja: ");
+        saldoEnCaja = sc.nextFloat();
         //Instanciando Tienda le estoy mandando el saldo en caja
-        Tienda productoTienda = new Tienda("Tinita-Store", 100000);
+        Tienda productoTienda = new Tienda(nombreTienda, saldoEnCaja);
 
         do{
-            System.out.println("Bienvenido");
             System.out.println("1 para compra - 2 para venta");
             eleccionPrincipal = sc.nextInt();
 
