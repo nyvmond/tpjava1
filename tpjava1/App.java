@@ -31,8 +31,24 @@ public class App {
                 //////////////////////////////////////////////////////////////////////////////
                 ///////////////////////BEBIDAS///////////////////////////////////////////////
                 if(eleccionTipoProducto == 1){
+                    boolean codigoValido = false;
                     System.out.println("Ingrese codigo de producto");
                     String id = sc.next();
+
+                //VALIDACION CODIGO BEBIBLES AB123
+                    do{
+                        if(id.length()==5 &&
+                            (id.charAt(0)=='A' || id.charAt(0)=='a') &&
+                            (id.charAt(1)=='B' || id.charAt(1)=='b')){
+                            codigoValido = true;
+                        }else{
+                            System.out.println("El codigo debe tener 5 caracteres y comenzar con A y B");
+                            codigoValido = false;
+                            System.out.println("Ingrese nuevamente codigo de producto: ");
+                            id = sc.next();
+                        }
+                    }while(!codigoValido);
+
                     System.out.println("Ingrese descripcion");
                     String descripcion = sc.next();
                     System.out.println("Ingrese Cantidad de productos a comprar");

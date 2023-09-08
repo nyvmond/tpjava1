@@ -128,7 +128,9 @@ public class Tienda {
     /*
     TODO
     VALIDACION ID: BEBIBLES / ENVASADOS / LIMPIEZA
+    De momento realizado en App
     */
+
 
 
 }
