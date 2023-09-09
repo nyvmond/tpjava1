@@ -35,17 +35,17 @@ public class App {
                 ///////////////////////BEBIDAS///////////////////////////////////////////////
                 if(eleccionTipoProducto == 1){
                     boolean codigoValido = false;
-                    System.out.println("Ingrese codigo de producto");
+                    System.out.println("Ingrese codigo de producto formato AC123");
                     String id = sc.next();
 
-                //VALIDACION CODIGO BEBIBLES AB123
+                //VALIDACION CODIGO BEBIBLES AC123
                     do{
                         if(id.length()==5 &&
                             (id.charAt(0)=='A' || id.charAt(0)=='a') &&
-                            (id.charAt(1)=='B' || id.charAt(1)=='b')){
+                            (id.charAt(1)=='C' || id.charAt(1)=='c')){
                             codigoValido = true;
                         }else{
-                            System.out.println("El codigo debe tener 5 caracteres y comenzar con A y B");
+                            System.out.println("El codigo debe tener 5 caracteres y comenzar con A y C");
                             codigoValido = false;
                             System.out.println("Ingrese nuevamente codigo de producto: ");
                             id = sc.next();
@@ -87,8 +87,25 @@ public class App {
                 ///////////////////////////////////////////////////////
                 /////////////////ENVASADOS/////////////////////////////
                 if(eleccionTipoProducto == 2){
+                    boolean codigoValido = false;
                     System.out.println("Ingrese codigo de producto");
                     String id = sc.next();
+
+                    //VALIDACION CODIGO ENVASADOS AB123
+                    do{
+                        if(id.length()==5 &&
+                                (id.charAt(0)=='A' || id.charAt(0)=='a') &&
+                                (id.charAt(1)=='B' || id.charAt(1)=='b')){
+                            codigoValido = true;
+                        }else{
+                            System.out.println("El codigo debe tener 5 caracteres y comenzar con A y B");
+                            codigoValido = false;
+                            System.out.println("Ingrese nuevamente codigo de producto: ");
+                            id = sc.next();
+                        }
+                    }while(!codigoValido);
+
+
                     System.out.println("Ingrese descripcion");
                     String descripcion = sc.next();
                     System.out.println("Ingrese Cantidad de productos a comprar");
@@ -101,11 +118,12 @@ public class App {
                     float costoPorUnidad = sc.nextFloat();
                     System.out.println("Ingrese Tipo De Envase: PLASTICO, VIDRIO, LATA");
                     TipoEnvase tipoEnvase = TipoEnvase.valueOf(sc.next()); //Esto estara bien?
-                    System.out.println("Es importado? Hardcode SI");
-                    boolean esImportado = true;
-                    System.out.println("Disponible para la venta? SI");
+                    System.out.println("De momento no vendemos productos Importados");
+                    boolean esImportado = false;
+                    System.out.println("Todos nuestros productos estan disponibles para la venta");
                     boolean disponibleParaLaVenta = true;
 
+                    //Hasta aca hago un nuevo envasado y le pase por params lo que el usuario ingreso
                     Envasados envasado = new Envasados(id, descripcion, cantidadDeProducto, precioPorUnidad,
                             costoPorUnidad, tipoEnvase, esImportado,disponibleParaLaVenta);
 
@@ -113,8 +131,6 @@ public class App {
                     //Valido si saldo en caja es suficiente para abastecerme
                     boolean puedoAbastecerme = productoTienda.saldoEnCajaParacomprar(cantidadDeProducto,
                             costoPorUnidad);
-                    //Si tengo mas saldo en caja que lo que estoy queriendo gastar puedo comprar el producto para
-                    //abastecimiento de mi tienda
                     if(puedoAbastecerme){
                         //Le paso el producto, el id y la cantidad para manejo de stock
                         productoTienda.compraDeProducto(envasado, cantidadDeProducto, id);
@@ -123,9 +139,53 @@ public class App {
                         System.out.println("No dispone de saldo suficiente para abastecerse.");
                     }
                 }
-                /////LIMPIEZA////TODO
+                /////LIMPIEZA////
+                if(eleccionTipoProducto == 3){
+                    boolean codigoValido = false;
+                    System.out.println("Ingrese codigo de producto formato AZ123");
+                    String id = sc.next();
 
+                    //VALIDACION CODIGO BEBIBLES AZ123
+                    do{
+                        if(id.length()==5 &&
+                                (id.charAt(0)=='A' || id.charAt(0)=='a') &&
+                                (id.charAt(1)=='Z' || id.charAt(1)=='z')){
+                            codigoValido = true;
+                        }else{
+                            System.out.println("El codigo debe tener 5 caracteres y comenzar con A y Z");
+                            codigoValido = false;
+                            System.out.println("Ingrese nuevamente codigo de producto: ");
+                            id = sc.next();
+                        }
+                    }while(!codigoValido);
 
+                    System.out.println("Ingrese descripcion");
+                    String descripcion = sc.next();
+                    System.out.println("Ingrese Cantidad de productos a comprar");
+                    int cantidadDeProducto = sc.nextInt();
+                    System.out.println("Ingrese Precio Por Unidad");
+                    //A que precio lo vendo como comerciante
+                    float precioPorUnidad = sc.nextFloat();
+                    System.out.println("Ingrese Costo por Unidad");
+                    //A que precio lo compro como comerciante
+                    float costoPorUnidad = sc.nextFloat();
+                    System.out.println("Ingrese tipo de aplicacion: COCINA, PISOS, ROPA, MULTIUSO");
+                    TipoDeAplicacion tipoAplicacion = TipoDeAplicacion.valueOf(sc.next());
+                    boolean disponibleParaLaVenta = true;
+
+                    //Hasta aca hago un nuevo prod Limpieza y le pase por params lo que el usuario ingreso
+                    Limpieza limpieza = new Limpieza(id, descripcion, precioPorUnidad, costoPorUnidad, tipoAplicacion,
+                            disponibleParaLaVenta, cantidadDeProducto);
+                    boolean puedoAbastecerme = productoTienda.saldoEnCajaParacomprar(cantidadDeProducto,
+                            costoPorUnidad);
+                    if(puedoAbastecerme){
+                        //Le paso el producto, el id y la cantidad para manejo de stock
+                        productoTienda.compraDeProducto(limpieza, cantidadDeProducto, id);
+                    }else{
+                        //Caso de no tener saldo disponible
+                        System.out.println("No dispone de saldo suficiente para abastecerse.");
+                    }
+                }//<--- Termina flujo abastecimiento productos de limpieza
             } //Termina el flujo de compra para abstecimiento
             //<----FIN
 

@@ -15,7 +15,7 @@ public class Limpieza extends Producto implements ProductosConDescuentos{
     public Limpieza(String id, String description, float precioPorUnidad,
                     float costoPorUnidad, TipoDeAplicacion tipoDeAplicacion, boolean disponibleParaLaVenta,
                     int cantidadEnStock) {
-        super(id, description, cantidadEnStock, precioPorUnidad, disponibleParaLaVenta, cantidadEnStock);
+        super(id, description, precioPorUnidad, costoPorUnidad, disponibleParaLaVenta, cantidadEnStock);
         this.tipoDeAplicacion = tipoDeAplicacion;
     }
 
