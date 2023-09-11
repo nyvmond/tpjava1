@@ -13,6 +13,9 @@ public class App {
         boolean fincompra = false;
         String nombreTienda;
         float saldoEnCaja;
+        int eleccionVentas;
+        String idProdAVender;
+        int cantAVender;
         Scanner sc = new Scanner(System.in);
 
         //Pido Nombre de la tienda y saldo en caja para operar
@@ -189,16 +192,33 @@ public class App {
             } //Termina el flujo de compra para abstecimiento
             //<----FIN
 
-            System.out.println("Desea realizar otra compra? 1- VOLVER AL MENU 2- FIN COMPRA");
+            System.out.println("Desea realizar otra compra? 1- VOLVER AL MENU 7- FIN COMPRA");
             int finCompraNum = sc.nextInt();
-            if(finCompraNum == 2){
+            if(finCompraNum == 7){
                 fincompra = true;
                 System.out.println("Saldo en caja restante: "+ productoTienda.getSaldoEnCaja());
             }
         }while(!fincompra);
 
         if(eleccionPrincipal == 2){
-            System.out.println("Que desea vender?");
+            System.out.println("Ingrese 3 para listar Stock - Ingrese 4 para compra con codigo");
+            eleccionVentas = sc.nextInt();
+
+            if(eleccionVentas==3){
+                System.out.println("A continuacion se listan los productos disponibles: ");
+                productoTienda.verProductos();
+            }
+            if(eleccionVentas==4){
+                System.out.println("Ingrese codigo de producto: ");
+                idProdAVender = sc.next();
+
+                //Llamo a metodo para buscar este producto y traigo la cantidad que hay
+                productoTienda.busquedaProducto(idProdAVender);
+                System.out.println("Cuantas unidades desea comprar?");
+                cantAVender = sc.nextInt();
+                productoTienda.compraDeProducto(idProdAVender, cantAVender);
+
+            }
         }
 
     }

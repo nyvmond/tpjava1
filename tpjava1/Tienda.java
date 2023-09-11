@@ -127,9 +127,57 @@ public class Tienda {
 
     /*
     TODO
-    VALIDACION ID: BEBIBLES / ENVASADOS / LIMPIEZA
-    De momento realizado en App
+    Metodo para recorrer array y traer algunos datos
+    Metodo para que busque un prod en particular y me diga el stock y precio
     */
+
+    public void verProductos(){
+        if(this.productosEnStock.size()>0){
+            for (Producto p : this.productosEnStock) {
+                System.out.println("Detalle de producto: \n");
+                System.out.print("ID: " + p.getId() + "\n");
+                System.out.print("Descripcion: " + p.getDescription() + "\n");
+                System.out.print("Precio: " + p.getPrecioPorUnidad() + "\n");
+                System.out.print("Cantidad en Stock: " + p.getCantidadEnStock() + "\n");
+            }
+        }else{
+            System.out.println("No hay productos en el Store, lo sentimos mucho!");
+        }
+
+    }
+
+    public void busquedaProducto(String id){
+        if(this.productosEnStock.size()>0){
+            for (Producto p : this.productosEnStock) {
+                if(p.getId().equals(id)){
+                    System.out.println("Hay "+p.getCantidadEnStock()+" unidades del producto "+p.getDescription());
+                }else{
+                    System.out.println("No hay del producto solicitado disponible");
+                }
+            }
+        }else{
+            System.out.println("No hay productos en el Store, lo sentimos mucho!");
+        }
+    }
+
+    public void compraDeProducto(String id, int cant){
+        if(this.productosEnStock.size()>0){
+            for (Producto p : this.productosEnStock) {
+                if(p.getId().equals(id)){
+                    int cantActual = p.getCantidadEnStock();
+                    p.setCantidadEnStock(cantActual-cant);
+                    System.out.println("Quedan en stock: "+p.getCantidadEnStock());
+                    float saldoGastado = p.getPrecioPorUnidad()*cant;
+                    this.saldoEnCaja += saldoGastado;
+                    System.out.println("Usted gasto "+saldoGastado);
+                }else{
+                    System.out.println("No hay del producto solicitado disponible");
+                }
+            }
+        }else{
+            System.out.println("No hay productos en el Store, lo sentimos mucho!");
+        }
+    }
 
 
 
