@@ -55,13 +55,13 @@ public class Tienda {
             //Tambien actualizo saldo en caja
             for (Producto p : this.productosEnStock) {
                 System.out.println("Se agrego el siguiente producto al store: \n");
-                System.out.println("ID: "+p.getId()+"\n");
-                System.out.println("Descripcion: "+p.getDescription() + "\n");
-                System.out.println("Cantidad en Stock: "+p.getCantidadEnStock() + "\n");
+                System.out.print("ID: "+p.getId()+"\n");
+                System.out.print("Descripcion: "+p.getDescription() + "\n");
+                System.out.print("Cantidad en Stock: "+p.getCantidadEnStock() + "\n");
                 //Manejo saldo en caja
                 saldoGastado = saldoAGastar(cant, p.getCostoPorUnidad());
                 setSaldoEnCaja(getSaldoEnCaja()-saldoGastado);
-                System.out.println("Saldo en caja restante: "+getSaldoEnCaja()+"\n");
+                System.out.print("Saldo en caja restante: "+getSaldoEnCaja()+"\n");
             }
         //Caso en el cual ya existe algo en el Store:
         }//FIN SIZE LISTA = 0
@@ -80,27 +80,27 @@ public class Tienda {
                 if (!nuevoProducto) {
                     producto.setCantidadEnStock(producto.getCantidadEnStock() + cant);
                     System.out.println("Este producto ya existe, se agrega nuevo stock al mismo: \n");
-                    System.out.println("Id: " + producto.getId() + "\n");
-                    System.out.println("Descripcion: " + producto.getDescription() + "\n");
+                    System.out.print("Id: " + producto.getId() + "\n");
+                    System.out.print("Descripcion: " + producto.getDescription() + "\n");
                     //Imprimo la cantidad en stock
-                    System.out.println("Cantidad en stock actual: " + producto.getCantidadEnStock());
+                    System.out.print("Cantidad en stock actual: " + producto.getCantidadEnStock());
                     //Saldo en Caja
                     saldoGastado = saldoAGastar(cant, producto.getCostoPorUnidad());
-                    System.out.println("saldo Gastado: " + saldoGastado);
+                    System.out.print("saldo Gastado: " + saldoGastado);
                     setSaldoEnCaja(getSaldoEnCaja() - saldoGastado);
-                    System.out.println("Saldo en caja restante para futuras operaciones: " + getSaldoEnCaja() + "\n");
+                    System.out.print("Saldo en caja restante para futuras operaciones: " + getSaldoEnCaja() + "\n");
                 }
                if(nuevoProducto){
                    System.out.println("El producto que esta ingresando no existia en el Store");
                    this.productosEnStock.add(producto);
                    System.out.println("Se agrego el siguiente producto al store: \n");
-                   System.out.println("ID: "+producto.getId()+"\n");
-                   System.out.println("Descripcion: "+producto.getDescription() + "\n");
-                   System.out.println("Cantidad en Stock: "+producto.getCantidadEnStock() + "\n");
+                   System.out.print("ID: "+producto.getId()+"\n");
+                   System.out.print("Descripcion: "+producto.getDescription() + "\n");
+                   System.out.print("Cantidad en Stock: "+producto.getCantidadEnStock() + "\n");
                    //Manejo saldo en caja
                    saldoGastado = saldoAGastar(cant, producto.getCostoPorUnidad());
                    setSaldoEnCaja(getSaldoEnCaja()-saldoGastado);
-                   System.out.println("Saldo en caja restante: "+getSaldoEnCaja()+"\n");
+                   System.out.print("Saldo en caja restante: "+getSaldoEnCaja()+"\n");
                }
         }
     }////TERMINA COMPRA DE PRODUCTO

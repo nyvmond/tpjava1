@@ -65,12 +65,9 @@ public class App {
                     System.out.println("Ingrese Costo por Unidad");
                     //A que precio lo compro como comerciante
                     float costoPorUnidad = sc.nextFloat();
-                    System.out.println("Actualmente no vendemos bebidas alcoholicas");
                     boolean esAlcoholica = false;
                     float graduacionAlcoholica = 0;
-                    System.out.println("Actualmente no tenemos bebidas importadas");
                     boolean esImportada = false;
-                    System.out.println("Se encuentra disponible para la venta");
                     boolean disponibleParaLaVenta = true;
                     //Hasta aca hago una nueva bebida y le pase por params lo que el usuario ingreso
                     Bebidas bebida = new Bebidas(id, descripcion, precioPorUnidad,costoPorUnidad,
@@ -213,7 +210,6 @@ public class App {
                     idProdAVender = sc.next();
 
                     //Llamo a metodo para buscar este producto y traigo la cantidad que hay
-                    productoTienda.busquedaProducto(idProdAVender);
                     boolean encontro = productoTienda.busquedaProducto(idProdAVender);
                     if(encontro){
                         System.out.println("Cuantas unidades desea comprar?");
@@ -222,17 +218,12 @@ public class App {
                     }else{
                         System.out.println("Lo sentimos, no podemos venderle un producto inexistente");
                     }
-
                 }
             }
             if(eleccionPrincipal == 3){
                 fincompra = true;
                 System.out.println("Saldo en caja restante: "+ productoTienda.getSaldoEnCaja());
             }
-
         }while(!fincompra);
-
-
-
     }//psvm
 }
