@@ -146,18 +146,22 @@ public class Tienda {
 
     }
 
-    public void busquedaProducto(String id){
+    public boolean busquedaProducto(String id){
         if(this.productosEnStock.size()>0){
             for (Producto p : this.productosEnStock) {
                 if(p.getId().equals(id)){
                     System.out.println("Hay "+p.getCantidadEnStock()+" unidades del producto "+p.getDescription());
+                    return true;
                 }else{
                     System.out.println("No hay del producto solicitado disponible");
+                    return false;
                 }
             }
         }else{
             System.out.println("No hay productos en el Store, lo sentimos mucho!");
+            return false;
         }
+        return false;
     }
 
     public void compraDeProducto(String id, int cant){

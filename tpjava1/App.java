@@ -27,7 +27,7 @@ public class App {
         Tienda productoTienda = new Tienda(nombreTienda, saldoEnCaja);
 
         do{
-            System.out.println("1 para compra - 2 para venta");
+            System.out.println("1 para compra - 2 para venta - 3 FIN");
             eleccionPrincipal = sc.nextInt();
 
             if(eleccionPrincipal == 1){
@@ -91,7 +91,7 @@ public class App {
                 /////////////////ENVASADOS/////////////////////////////
                 if(eleccionTipoProducto == 2){
                     boolean codigoValido = false;
-                    System.out.println("Ingrese codigo de producto");
+                    System.out.println("Ingrese codigo de producto formato AB123");
                     String id = sc.next();
 
                     //VALIDACION CODIGO ENVASADOS AB123
@@ -189,37 +189,50 @@ public class App {
                         System.out.println("No dispone de saldo suficiente para abastecerse.");
                     }
                 }//<--- Termina flujo abastecimiento productos de limpieza
+                System.out.println("Desea realizar otra compra? 1-SI 2-VENTA 3-FIN PROGRAMA");
+                eleccionPrincipal = sc.nextInt();
+                if(eleccionPrincipal == 3){
+                    fincompra = true;
+                    System.out.println("Saldo en caja restante: "+ productoTienda.getSaldoEnCaja());
+                }
+
             } //Termina el flujo de compra para abstecimiento
             //<----FIN
 
-            System.out.println("Desea realizar otra compra? 1- VOLVER AL MENU 7- FIN COMPRA");
-            int finCompraNum = sc.nextInt();
-            if(finCompraNum == 7){
+            ////FLUJO VENTA AL PUBLICO/////
+            if(eleccionPrincipal == 2){
+                System.out.println("Ingrese 1 para listar Stock - Ingrese 2 para compra con codigo");
+                eleccionVentas = sc.nextInt();
+
+                if(eleccionVentas==1){
+                    System.out.println("A continuacion se listan los productos disponibles: ");
+                    productoTienda.verProductos();
+                }
+                if(eleccionVentas==2){
+                    System.out.println("Ingrese codigo de producto: ");
+                    idProdAVender = sc.next();
+
+                    //Llamo a metodo para buscar este producto y traigo la cantidad que hay
+                    productoTienda.busquedaProducto(idProdAVender);
+                    boolean encontro = productoTienda.busquedaProducto(idProdAVender);
+                    if(encontro){
+                        System.out.println("Cuantas unidades desea comprar?");
+                        cantAVender = sc.nextInt();
+                        productoTienda.compraDeProducto(idProdAVender, cantAVender);
+                    }else{
+                        System.out.println("Lo sentimos, no podemos venderle un producto inexistente");
+                    }
+
+                }
+            }
+            if(eleccionPrincipal == 3){
                 fincompra = true;
                 System.out.println("Saldo en caja restante: "+ productoTienda.getSaldoEnCaja());
             }
+
         }while(!fincompra);
 
-        if(eleccionPrincipal == 2){
-            System.out.println("Ingrese 3 para listar Stock - Ingrese 4 para compra con codigo");
-            eleccionVentas = sc.nextInt();
 
-            if(eleccionVentas==3){
-                System.out.println("A continuacion se listan los productos disponibles: ");
-                productoTienda.verProductos();
-            }
-            if(eleccionVentas==4){
-                System.out.println("Ingrese codigo de producto: ");
-                idProdAVender = sc.next();
 
-                //Llamo a metodo para buscar este producto y traigo la cantidad que hay
-                productoTienda.busquedaProducto(idProdAVender);
-                System.out.println("Cuantas unidades desea comprar?");
-                cantAVender = sc.nextInt();
-                productoTienda.compraDeProducto(idProdAVender, cantAVender);
-
-            }
-        }
-
-    }
+    }//psvm
 }
